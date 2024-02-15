@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 
 const saveUploaded  = require('../controllers/uploadController')
+const fetchFile  = require('../controllers/fetchController')
 
 // multer with storage options
 const storage = multer.diskStorage({
@@ -21,5 +22,6 @@ router.get('/', (req, res)=>{
 });
 
 router.post('/file/:filename', upload.single('file'), saveUploaded)
+router.get('/file/:filename', fetchFile)
 
 module.exports = router;

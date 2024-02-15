@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whisper',
+    'transcription',
     'channels',
     'daphne',
     'django.contrib.staticfiles'
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'djangoProject.asgi.application'
+ASGI_APPLICATION = 'djangoServer.asgi.application'
 
 CHANNEL_LAYERS = {
     "default": {
