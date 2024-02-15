@@ -1,28 +1,23 @@
 const express = require('express');
 const app = express();
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-
-const routes = require('./routes');
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
 
 const mongoConnection = 'mongodb+srv://sofmazepa:R-Xzpt3YA48mJC6@cluster0.lo04qnz.mongodb.net/?retryWrites=true&w=majority'
 const mongoose = require('mongoose');
 
-const methodOverride = require('method-override');
-app.use(methodOverride('_method'));
+const fileRoutes = require('./routes/fileRoutes')
 
 // Set EJS / pug as the view engine
 app.set('view engine', 'pug');
-// app.set('views', 'views');
-app.set('views', ['views', 'views/user']);
+app.set('views', 'views');
 
-// app.use('/', routes.homeRoutes);
-app.use('/', (req, res)=>{
-  res.send("hello");
-});
+app.use('/', fileRoutes);
+
 // app.use('/users', routes.userRoutes);
 // app.use('/*', routes.homeRoutes);
+
 
 const PORT = 3400;
 
