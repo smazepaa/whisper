@@ -6,11 +6,10 @@ from .helpers.audioTranscribe import fetchNtranscribe
 
 @csrf_exempt
 @require_http_methods(["POST"])
-def transcribe(request):
+async def transcribe(request):
     if 'file' in request.FILES:
-
-        response = fetchNtranscribe(request.FILES['file'])
-        return JsonResponse(response)
+        result = await fetchNtranscribe(request.FILES['file'])
+        return JsonResponse(result)
     else:
         return JsonResponse({'error': 'No file uploaded'}, status=400)
 

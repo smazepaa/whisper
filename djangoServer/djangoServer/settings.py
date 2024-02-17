@@ -72,7 +72,6 @@ TEMPLATES = [
 ]
 
 ASGI_APPLICATION = 'djangoServer.asgi.application'
-# NODE_ENDPOINT = 'http://localhost:3400/django'
 
 CHANNEL_LAYERS = {
     "default": {

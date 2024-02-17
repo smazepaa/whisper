@@ -13,7 +13,7 @@ from django.core.asgi import get_asgi_application
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 
-# from transcription.consumer import Consumer
+from transcription.consumer import TranscriptConsumer
 from django.urls import path
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webdev.settings')
@@ -21,10 +21,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webdev.settings')
 django_asgi_app = get_asgi_application()
 
 application = ProtocolTypeRouter({
-    'http': django_asgi_app
-    # 'websocket': AuthMiddlewareStack(
-    #     URLRouter([
-    #         path('ws', Consumer.as_asgi())
-    #     ])
-    # )
+    'http': django_asgi_app,
+    'websocket': AuthMiddlewareStack(
+        URLRouter([
+            path('ws', TranscriptConsumer.as_asgi())
+        ])
+    )
 })

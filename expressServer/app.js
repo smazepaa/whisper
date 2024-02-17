@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 
+const MONGO_CONNECTION = require('./configs/mongo');
+
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 
-const mongoConnection = 'mongodb+srv://sofmazepa:R-Xzpt3YA48mJC6@cluster0.lo04qnz.mongodb.net/?retryWrites=true&w=majority'
 const mongoose = require('mongoose');
 
 const fileRoutes = require('./routes/fileRoutes')
@@ -17,18 +18,41 @@ app.set('views', 'views');
 
 app.use('/', fileRoutes);
 
-// app.use('/users', routes.userRoutes);
-// app.use('/*', routes.homeRoutes);
+const PORT = require('./configs/port');
 
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server: server });
 
-const PORT = 3400;
+wss.on('connection', (ws) => {
+  console.log('Client connected');
+
+  ws.on('message', (message) => {
+    console.log('Received message: ' + message);
+
+  });
+
+  ws.on('open', () => {
+    console.log('WebSocket connection opened');
+    ws.send(JSON.stringify({ method: 'subscribed' }));
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+
+  ws.on('error', (error) => {
+    console.error('WebSocket error:', error.message);
+  });
+});
+
+const WS_PORT = 3001;
 
 const start = async () => {
-  await mongoose.connect(mongoConnection);
+  await mongoose.connect(MONGO_CONNECTION);
   console.log('Database connected');
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  })
+  server.listen(WS_PORT, () => {
+    console.log(`WS Server is running on http://localhost:${WS_PORT}`);
+  });
 };
 
 start();
