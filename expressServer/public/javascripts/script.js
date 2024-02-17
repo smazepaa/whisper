@@ -18,6 +18,6 @@ function logFileInfo() {
         console.log("No file selected.");
     }
 
-    form.action = '/file/' + encodeURIComponent(file.name);
+    form.action = '/file';
     console.log(form.action);
 }

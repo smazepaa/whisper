@@ -8,6 +8,8 @@ const mongoConnection = 'mongodb+srv://sofmazepa:R-Xzpt3YA48mJC6@cluster0.lo04qn
 const mongoose = require('mongoose');
 
 const fileRoutes = require('./routes/fileRoutes')
+const http = require("http");
+const WebSocket = require("ws");
 
 // Set EJS / pug as the view engine
 app.set('view engine', 'pug');

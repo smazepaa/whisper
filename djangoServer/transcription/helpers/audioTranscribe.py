@@ -1,30 +1,25 @@
-import requests
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
+import tempfile
 import whisper
 
 
-def fetchNtranscribe(file_url, save_path):
-    response = requests.get(file_url)
-    if response.status_code == 200:
-        file_content = ContentFile(response.content)
-        saved_path = default_storage.save(save_path, file_content)
-        print(f"File successfully saved to {saved_path}")
+def fetchNtranscribe(uploaded_file):
+    temp_path = None
+    try:
+        # Write the uploaded file to a temporary file
+        fd, temp_path = tempfile.mkstemp()
+        with open(temp_path, 'wb+') as tmp_file:
+            for chunk in uploaded_file.chunks():
+                tmp_file.write(chunk)
 
-        # Load the Whisper model
         model = whisper.load_model("base")
+        result = model.transcribe(temp_path, fp16=False)
 
-        # Ensure the file path is correct
-        file_path = default_storage.path(saved_path)
+        return {'transcription': result["text"]}
 
-        # Transcribe the audio file
-        result = model.transcribe(file_path, fp16=False)
-        print(result["text"])
-        detected_language = result["language"]
-        print("Detected language code:", detected_language)
+    except Exception as e:
+        return {'error': str(e)}
 
-        # Return the transcription text
-        return result["text"]
-    else:
-        print(f"Failed to fetch file from {file_url}")
-        return "Failed to fetch or transcribe file."
+    # finally:
+    #     # Clean up the temporary file
+    #     if temp_path and os.path.exists(temp_path):
+    #         os.remove(temp_path)
