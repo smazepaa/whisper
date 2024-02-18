@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log('Success:', data);
 
                 const messagesDiv = document.getElementById('messages');
-                messagesDiv.style.display = 'block';
-                messagesDiv.innerHTML = `<p>${data['transcription']}</p>`;
+                messagesDiv.style.display = 'flex';
+                // messagesDiv.innerHTML = `<p>${data['transcription']}</p>`;
 
                 const downloadLink = createDownload(fileInput, data);
 
@@ -64,12 +64,11 @@ function checkFormat(){
     const messagesDiv = document.getElementById('small-m');
     if (file) {
         if (file.type === 'audio/mpeg' || file.type === 'audio/wav' || file.type === 'audio/x-wav') {
-            messagesDiv.textContent = `File "${file.name}" ready to be transcribed.`;
+            messagesDiv.textContent = '';
         }
         else {
             messagesDiv.textContent = 'Please upload an MP3 or WAV file.';
             removeFile();
         }
     }
-
 }

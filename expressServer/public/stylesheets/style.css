@@ -231,11 +231,12 @@ input[type='file'] {
     margin: 20px auto;
 }
 
-::-webkit-file-upload-button, input[type='button'], input[type='submit'] {
+::-webkit-file-upload-button, input[type='button'], input[type='submit'], .download-link {
     background-color: #3B33C8;
     color: white;
     padding: 10px 20px;
     border: none;
+    text-decoration: none;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -243,16 +244,15 @@ input[type='file'] {
     margin: 10px;
 }
 
-::-webkit-file-upload-button, input[type='button']:hover, input[type='submit']:hover {
+::-webkit-file-upload-button, input[type='button']:hover, input[type='submit']:hover, .download-link:hover {
     background-color: #2923af;
 }
 
 /* Output message styling */
 p#output {
-    color: #3B33C8;
     font-weight: bold;
-    padding: 10px;
     margin-top: 20px;
+    text-align: center;
 }
 
 .home-btn {
@@ -265,7 +265,7 @@ p#output {
     transition: background-color 0.3s;
     text-decoration: none;
     margin-left: 20px;
-    margin-top:20px;
+    margin-top: 40px;
 }
 
 .home-btn:hover {
@@ -276,25 +276,17 @@ p#output {
     font-family: 'Montserrat', sans-serif;
 }
 
-.download-link {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.download-link:hover {
-    background-color: #0056b3;
-}
-
 #small-m{
     font-size: 0.8em;
     text-align: left;
     margin: 0 auto 10px;
     width: 80%;
     padding: 0 10px;
+}
+
+#messages{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
