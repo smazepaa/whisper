@@ -1,0 +1,300 @@
+/* Base styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #EEF2FF;
+    color: #040a15;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+html{
+    height: 100%;
+}
+
+/* Header styles */
+header {
+    background-color: #f7f9ff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+header nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #1c1c1c;
+    text-decoration: none;
+    padding: 5px 15px;
+    display: block;
+    font-weight: 500;
+}
+
+#logo {
+    font-weight: 800;
+    color: #3B33C8;
+    margin-right: auto;
+    font-size:120%;
+}
+
+/* Main styles */
+main {
+    padding-top: 80px;
+    flex: 1;
+}
+
+#big-text {
+    text-align: center;
+    padding: 40px 40px 60px 40px;
+}
+
+#big-text h1, #big-text p {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.btn-lnk{
+    display: inline-block;
+    background-color: #3B33C8;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-weight: bolder;
+}
+
+.btn-lnk:hover {
+    background-color: #2923af;
+}
+
+/* Step-by-step */
+#step-by-step {
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#step-by-step h2 {
+    color: #000000;
+    font-size: 1.7em;
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#step-by-step ol {
+    counter-reset: step-counter;
+    padding-left: 0;
+    list-style: none;
+    margin-left: auto;
+    text-align: left;
+}
+
+#step-by-step ol li {
+    counter-increment: step-counter;
+    font-size: 1em;
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 40px;
+    text-align: left;
+}
+
+#step-by-step ol li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 2em;
+    font-weight: bold;
+    color: #3B33C8;
+}
+
+#step-by-step ol li strong {
+    display: block;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+#step-by-step ol li p {
+    margin: 0;
+}
+
+.step-image {
+    max-width: 20%;
+    margin-left: 5vw;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* Benefits */
+#benefits {
+    background-color: #3B33C8;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.bnft {
+    flex: 1;
+    margin: 0 10px;
+    padding: 20px;
+    background-color: #3d34cb;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bnft p:first-child {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.bnft p:last-child {
+    font-size: 1em;
+}
+
+
+/* File upload */
+#fileUpload.highlight {
+    background-color: #eee;
+}
+
+input{
+    font-family: 'Montserrat', sans-serif;
+}
+
+label[for="fileInput"] {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #3B33C8;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    background-color: #3B33C8;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 0.7em;
+    color: white;
+}
+
+
+/* Form container */
+#uploadForm {
+    background-color: #fdfdff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+/* Style input fields */
+input[type='file'] {
+    border: 2px solid #3B33C8;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+}
+
+::-webkit-file-upload-button, input[type='button'], input[type='submit'] {
+    background-color: #3B33C8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    margin: 10px;
+}
+
+::-webkit-file-upload-button, input[type='button']:hover, input[type='submit']:hover {
+    background-color: #2923af;
+}
+
+/* Output message styling */
+p#output {
+    color: #3B33C8;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.home-btn {
+    font-weight:bolder;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    margin-left: 20px;
+    margin-top:20px;
+}
+
+.home-btn:hover {
+    color: #2923af;
+}
+
+::-webkit-file-upload-button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.download-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.download-link:hover {
+    background-color: #0056b3;
+}
+
+#small-m{
+    font-size: 0.8em;
+    text-align: left;
+    margin: 0 auto 10px;
+    width: 80%;
+    padding: 0 10px;
+}

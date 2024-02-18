@@ -43,4 +43,4 @@ async def send_progress_updates(duration, websocket):
         if progress >= 100:
             break
         await websocket.send(f'Progress: {int(min(progress, 100))}%')
-        await asyncio.sleep(0.1)  # update every half a second
+        await asyncio.sleep(0.1)

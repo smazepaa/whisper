@@ -4,7 +4,7 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         title Textify - Convert Audio to Text
-        link(rel="stylesheet" href="/stylesheets/main-style.css")
+        link(rel="stylesheet" href="/stylesheets/style.css")
         link(rel="preconnect" href="https://fonts.googleapis.com")
         link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
         link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Noto+Sans+Kannada:wght@100..900&display=swap" rel="stylesheet")
@@ -14,28 +14,24 @@ html(lang="en")
             nav
                 div#logo Textify
                 ul
-                    li.center-li
+                    li
                         a(href="#benefits") Features
-                    li.center-li
+                    li
                         a(href="#step-by-step") Instruction
-                    li.center-li
+                    li
                         a(href="/transcribe") Converter
-                a(href="#" class="signup-btn") Log in
         main
             div#big-text
                 h1 Convert Audio to Text
                 p Effortlessly convert audio files into accurate text transcripts.
-                a(href="/transcribe") Try now →
+                a.btn-lnk(href="/transcribe") Try now →
+
             div#benefits
-                div.bnft
-                    p Real-time conversion
-                    p Experience the efficiency of real-time conversion with our tool, exceptionally useful for live events and streaming.
-                div.bnft
-                    p High Accuracy
-                    p Perfect for professionals, the converter transforms spoken words into written text with minimal errors, enhancing your productivity.
-                div.bnft
-                    p Multilingual Support
-                    p Our converter supports multiple languages, making it an ideal global transcription tool.
+                each benefit in benefits
+                    div.bnft
+                        strong= benefit.title
+                        p= benefit.description
+
             div#step-by-step
                 div.content-wrapper
                     div
@@ -45,6 +41,7 @@ html(lang="en")
                                 li
                                     strong= step.title
                                     p= step.description
+                        a.btn-lnk(href="/transcribe") Try now →
                     img(src="https://i.pinimg.com/564x/90/82/82/9082829b9e25179daf4a6f15f17c966e.jpg" alt="Descriptive Text" class="step-image")
         footer
             p © 2024 TEXTIFY AUDIO-TEXT CONVERTER

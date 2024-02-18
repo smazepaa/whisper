@@ -3,8 +3,8 @@ html
     head
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
-        title= title
-        link(rel="stylesheet" type="text/css" href="/stylesheets/main-style.css")
+        title Transcription
+        link(rel="stylesheet" type="text/css" href="/stylesheets/style.css")
         link(rel="preconnect" href="https://fonts.googleapis.com")
         link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
         link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Noto+Sans+Kannada:wght@100..900&display=swap" rel="stylesheet")
@@ -14,13 +14,12 @@ html
             nav
                 div#logo Textify
                 ul
-                    li.center-li
+                    li
                         a(href="/#benefits") Features
-                    li.center-li
+                    li
                         a(href="/#step-by-step") Instruction
-                    li.center-li
-                        a(href="/transcribe") Converter
-                a(href="#" class="signup-btn") Log in
+                    li
+                        a(href="#") Converter
 
         main
 
@@ -28,10 +27,11 @@ html
 
             form#uploadForm(action="javascript:void(0);", method="post", enctype="multipart/form-data")
                 label(for="fileUpload", style="font-weight:bold") Click the button or drop the file:
-                input(type="file", id="fileUpload", name="file", required )
+                input(type="file", id="fileUpload", name="file", onchange="checkFormat()", required )
+                p#small-m
 
                 input(type="button", value="Remove File", onclick="removeFile()")
-                input(type="submit", value="Transcript File")
+                input(type="submit", value="Transcribe File")
 
             p#output
 
