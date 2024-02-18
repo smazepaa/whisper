@@ -67,12 +67,12 @@ nav ul li a {
 
 /* Main styles */
 main {
-    padding-top: 60px;
+    padding-top: 80px;
 }
 
 #big-text {
     text-align: center; /* Center aligns the content */
-    padding: 60px 40px;
+    padding: 40px 40px 60px 40px;
 }
 
 #big-text h1, #big-text p {
@@ -193,66 +193,31 @@ main {
 
 
 /* File upload */
-#file-upload {
-    border: 2px dashed #3B33C8;
-    border-radius: 5px;
-    padding: 20px;
-    text-align: center;
-    color: #3B33C8;
-    width: 50%;
-    margin:auto;
-    margin-bottom: 40px;
-}
+/*#fileUpload {*/
+/*    border: 2px dashed #3B33C8;*/
+/*    border-radius: 5px;*/
+/*    padding: 20px;*/
+/*    text-align: center;*/
+/*    color: #3B33C8;*/
+/*    width: 50%;*/
+/*    margin:auto;*/
+/*    margin-bottom: 40px;*/
+/*}*/
 
 #file-upload.highlight {
     background-color: #eee; /* Highlight color when dragging files over */
 }
 
-/*input[type="file"] {*/
-/*    opacity: 0;*/
-/*    overflow: hidden;*/
-/*    position: absolute;*/
-/*    z-index: -1;*/
-/*}*/
-
-/*label[for="fileInput"] {*/
-/*    font-size: 1.2em;*/
-/*    font-weight: bold;*/
-/*    color: #3B33C8;*/
-/*    display: inline-block;*/
-/*    cursor: pointer;*/
-/*}*/
-
-#file-upload-success {
-    background-color: #E8F0FE;
-    border: 1px solid #D1D5DB;
-    border-radius: 5px;
-    padding: 20px;
-    margin-top: 20px;
+input{
+    font-family: 'Montserrat', sans-serif;
 }
 
-#file-details p {
-    color: #1F2937;
-    margin: 5px 0;
-}
-
-.file-detail {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.file-icon {
-    font-size: 24px; /* Size of the icon */
-    margin-right: 10px;
-}
-
-.file-name, .file-size {
-    margin: 0 5px;
-}
-
-#file-details {
-    margin-top: 10px;
+label[for="fileInput"] {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #3B33C8;
+    display: inline-block;
+    cursor: pointer;
 }
 
 
@@ -260,7 +225,77 @@ main {
 footer {
     background-color: #3B33C8; /* White background */
     text-align: center; /* Center the text */
-    padding: 5px 0; /* Padding for spacing */
-    font-size:0.5em;
+    padding: 8px 0; /* Padding for spacing */
+    font-size: 0.7em;
     color: white;
+}
+
+
+/* Form container */
+#uploadForm {
+    background-color: #fdfdff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+/* Style input fields */
+input[type='file'] {
+    border: 2px solid #3B33C8;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+}
+
+/* Align buttons with the design of the second page */
+::-webkit-file-upload-button, input[type='button'], input[type='submit'] {
+    background-color: #3B33C8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    margin: 10px;
+}
+
+::-webkit-file-upload-button, input[type='button']:hover, input[type='submit']:hover {
+    background-color: #2923af;
+}
+
+/* Output message styling */
+p#output {
+    color: #3B33C8;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.home-btn {
+    /*background-color: #3B33C8;*/
+    font-weight:bolder;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    margin-left: 20px; /* Spacing before the features list */
+    margin-top:20px;
+}
+
+.home-btn:hover {
+    color: #2923af;
+}
+
+::-webkit-file-upload-button {
+    /*display: none;*/
+    font-family: 'Montserrat', sans-serif;
 }

@@ -46,13 +46,6 @@ html(lang="en")
                                     strong= step.title
                                     p= step.description
                     img(src="https://i.pinimg.com/564x/90/82/82/9082829b9e25179daf4a6f15f17c966e.jpg" alt="Descriptive Text" class="step-image")
-            div#file-upload
-                input(type="file" id="fileInput" name="files" multiple)
-                label(for="fileInput") Upload audio
-            div#file-upload-success(style="display: none;")
-                p File uploaded successfully!
-                div#file-details
-                    // File details will be inserted here by JavaScript
         footer
             p © 2024 TEXTIFY AUDIO-TEXT CONVERTER
         script(src="scripts/uploading.js")

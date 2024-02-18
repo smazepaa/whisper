@@ -4,11 +4,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const websocket = new WebSocket(wsUri);
 
     function writeToScreen(message) {
-        output.insertAdjacentHTML("beforeend", `<p>${message}</p>`);
+        let p = output.querySelector("p");
+        if (!p) {
+            p = document.createElement("p");
+            p.textContent = message;
+            output.appendChild(p);
+        } else {
+            p.textContent = message;
+        }
     }
 
     websocket.onmessage = (e) => {
-
         if (e.data instanceof Blob) {
             let reader = new FileReader();
             reader.onload = () => {

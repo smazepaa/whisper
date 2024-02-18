@@ -4,26 +4,41 @@ html
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
         title= title
-        // link(rel='stylesheet' type="text/css" href='/stylesheets/style.css')
         link(rel="stylesheet" type="text/css" href="/stylesheets/main-style.css")
         link(rel="preconnect" href="https://fonts.googleapis.com")
         link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
         link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Noto+Sans+Kannada:wght@100..900&display=swap" rel="stylesheet")
         link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css")
     body
-        h1= title
+        header
+            nav
+                div#logo Textify
+                ul
+                    li.center-li
+                        a(href="/#benefits") Features
+                    li.center-li
+                        a(href="/#step-by-step") Instruction
+                    li.center-li
+                        a(href="/transcribe") Converter
+                a(href="#" class="signup-btn") Log in
 
-        if title === 'Choose a file to upload'
+        main
+
+            a(href="/" class="home-btn") ← Main Page
+
             form#uploadForm(action="javascript:void(0);", method="post", enctype="multipart/form-data")
-                label(for="fileUpload") Choose a file to upload:
-                input(type="file", id="fileUpload", name="file", required)
+                label(for="fileUpload", style="font-weight:bold") Click the button or drop the file:
+                input(type="file", id="fileUpload", name="file", required )
 
                 input(type="button", value="Remove File", onclick="removeFile()")
-                input(type="submit", value="Upload File")
+                input(type="submit", value="Transcript File")
 
-            div#output
+            p#output
 
-        div#messages
+            div#messages
+
+        footer
+            p © 2024 TEXTIFY AUDIO-TEXT CONVERTER
 
         script(type='text/javascript', src='/javascripts/uploading.js')
         script(type='text/javascript', src='/javascripts/websocket.js')
