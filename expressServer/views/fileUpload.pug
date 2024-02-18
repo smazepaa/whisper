@@ -3,17 +3,22 @@ html
     head
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
-        title Upload file
+        title= title
         link(rel='stylesheet' type="text/css" href='/stylesheets/style.css')
     body
-        h1 Choose a file to upload
+        h1= title
 
-        form(action="/upload", method="post", enctype="multipart/form-data")
-            label(for="fileUpload") Choose a file to upload:
-            input(type="file", id="fileUpload", name="file", required, onchange="logFileInfo()")
+        if title === 'Choose a file to upload'
+            form#uploadForm(action="javascript:void(0);", method="post", enctype="multipart/form-data")
+                label(for="fileUpload") Choose a file to upload:
+                input(type="file", id="fileUpload", name="file", required)
 
-            input(type="button", value="Remove File", onclick="removeFile()")
+                input(type="button", value="Remove File", onclick="removeFile()")
+                input(type="submit", value="Upload File")
 
-            input(type="submit", value="Upload File")
+            div#output
+
+        div#messages
 
         script(type='text/javascript', src='/javascripts/script.js')
+        script(type='text/javascript', src='/javascripts/websocket.js')

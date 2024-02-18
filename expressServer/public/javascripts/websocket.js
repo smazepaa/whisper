@@ -1,23 +1,27 @@
-// websocket.js
-const socket = new WebSocket('ws://localhost:3001');
+document.addEventListener("DOMContentLoaded", function() {
+    const wsUri = "ws://localhost:3001";
+    const output = document.querySelector("#output");
+    const websocket = new WebSocket(wsUri);
 
-socket.addEventListener('open', function (event) {
-    console.log('Connected to WS Server');
-});
+    function writeToScreen(message) {
+        output.insertAdjacentHTML("beforeend", `<p>${message}</p>`);
+    }
 
-socket.addEventListener('message', function (event) {
-    console.log('Message from server ', event.data);
-    const data = JSON.parse(event.data);
-    const messages = document.getElementById('messages');
-    const messageElement = document.createElement('div');
-    messageElement.textContent = data.message; // Make sure to use the correct property from your message structure
-    messages.appendChild(messageElement);
-});
+    websocket.onmessage = (e) => {
 
-socket.addEventListener('close', function (event) {
-    console.log('Disconnected from WS Server');
-});
+        if (e.data instanceof Blob) {
+            let reader = new FileReader();
+            reader.onload = () => {
+                console.log(reader.result);
+                writeToScreen(reader.result);
+            };
+            reader.readAsText(e.data);
+        } else {
+            writeToScreen(e.data);
+        }
+    };
 
-socket.addEventListener('error', function (event) {
-    console.error('WebSocket error: ', event);
+    websocket.onerror = (e) => {
+        writeToScreen(`ERROR: ${e.data}`);
+    };
 });

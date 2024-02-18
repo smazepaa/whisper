@@ -1,25 +1,22 @@
 const express = require('express');
 const app = express();
-
-const MONGO_CONNECTION = require('./configs/mongo');
-
-const path = require('path');
-app.use(express.static(path.join(__dirname, 'public')));
-
 const mongoose = require('mongoose');
-
-const fileRoutes = require('./routes/fileRoutes')
 const http = require("http");
 const WebSocket = require("ws");
 
-// Set EJS / pug as the view engine
+const MONGO_CONNECTION = require('./configs/mongo');
+const WS_PORT = require('./configs/port');
+
+const fileRoutes = require('./routes/fileRoutes')
+
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
+app.use(express.static('public'));
 app.use('/', fileRoutes);
 
-const PORT = require('./configs/port');
 
+// websocket server setup (from practices/github)
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server: server });
 
@@ -27,8 +24,12 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   ws.on('message', (message) => {
-    console.log('Received message: ' + message);
-
+    console.log(`Received message: ${message}`);
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
   });
 
   ws.on('open', () => {
@@ -45,7 +46,6 @@ wss.on('connection', (ws) => {
   });
 });
 
-const WS_PORT = 3001;
 
 const start = async () => {
   await mongoose.connect(MONGO_CONNECTION);

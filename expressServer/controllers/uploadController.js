@@ -17,7 +17,7 @@ async function redirectToDjango(req, res) {
             });
             console.log('Django Response:', djangoResponse.data);
             const transcriptText = djangoResponse.data['transcription'];
-            res.render('transcription', { transcript: transcriptText });
+            res.send(djangoResponse.data);
         } catch (error) {
             console.error('Error making request to Django:', error.message);
             res.json({ error: error.message });
