@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById('uploadForm');
+    const formDiv = document.getElementById('formDiv');
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -7,12 +8,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const formData = new FormData();
         formData.append('file', fileInput.files[0]);
+        form.style.display = 'none';
 
         fetch('/file', {
             method: 'POST',
             body: formData,
         })
             .then(response => {
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -20,15 +23,24 @@ document.addEventListener("DOMContentLoaded", function() {
                 return response.json();
             })
             .then(data => {
+
                 console.log('Success:', data);
 
                 const messagesDiv = document.getElementById('messages');
                 messagesDiv.style.display = 'flex';
                 // messagesDiv.innerHTML = `<p>${data['transcription']}</p>`;
+                formDiv.appendChild(messagesDiv);
 
                 const downloadLink = createDownload(fileInput, data);
 
+                const reTranscribe = document.createElement('a');
+                reTranscribe.href = '/transcribe';
+                reTranscribe.textContent = 'Transcribe Again';
+                reTranscribe.className = 'download-link';
+
                 messagesDiv.appendChild(downloadLink);
+                messagesDiv.appendChild(reTranscribe);
+
             })
 
             .catch(error => {

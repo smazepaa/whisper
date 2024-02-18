@@ -211,7 +211,7 @@ footer {
 
 
 /* Form container */
-#uploadForm {
+#formDiv {
     background-color: #fdfdff;
     padding: 20px;
     border-radius: 10px;
@@ -242,6 +242,7 @@ input[type='file'] {
     transition: background-color 0.3s;
     display: inline-block;
     margin: 10px;
+    font-size: 0.8em;
 }
 
 ::-webkit-file-upload-button, input[type='button']:hover, input[type='submit']:hover, .download-link:hover {
@@ -286,7 +287,7 @@ p#output {
 
 #messages{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
 }
