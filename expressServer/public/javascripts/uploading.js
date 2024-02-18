@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 const messagesDiv = document.getElementById('messages');
                 messagesDiv.style.display = 'flex';
-                // messagesDiv.innerHTML = `<p>${data['transcription']}</p>`;
                 formDiv.appendChild(messagesDiv);
 
                 const downloadLink = createDownload(fileInput, data);
@@ -42,11 +41,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 messagesDiv.appendChild(reTranscribe);
 
             })
-
             .catch(error => {
                 console.error('Error:', error);
             });
-
     });
 });
 
