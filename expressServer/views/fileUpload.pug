@@ -26,6 +26,10 @@ html
             a(href="/" class="home-btn") ← Main Page
 
             div#formDiv
+
+                button#sidebarToggle
+                    i.fa-solid.fa-clock-rotate-left
+
                 form#uploadForm(action="javascript:void(0);", method="post", enctype="multipart/form-data")
                     label(for="fileUpload", style="font-weight:bold") Click the button or drop the file:
                     input(type="file", id="fileUpload", name="file", onchange="checkFormat()", required )
@@ -37,6 +41,14 @@ html
                 p#output
 
                 div#messages
+
+        aside#transcriptionHistorySidebar
+            h2 History of Transcriptions
+            // You will dynamically populate this list with transcription history
+            ul#transcriptionHistoryList
+
+            button#closeSidebar
+                i.fa-solid.fa-xmark
 
         footer
             p © 2024 TEXTIFY AUDIO-TEXT CONVERTER

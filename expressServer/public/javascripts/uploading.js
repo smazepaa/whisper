@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
+
+    handleSidebar();
+
     const form = document.getElementById('uploadForm');
     const formDiv = document.getElementById('formDiv');
 
@@ -25,20 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
 
                 console.log('Success:', data);
-
-                const messagesDiv = document.getElementById('messages');
-                messagesDiv.style.display = 'flex';
-                formDiv.appendChild(messagesDiv);
-
-                const downloadLink = createDownload(fileInput, data);
-
-                const reTranscribe = document.createElement('a');
-                reTranscribe.href = '/transcribe';
-                reTranscribe.textContent = 'Transcribe Again';
-                reTranscribe.className = 'download-link';
-
-                messagesDiv.appendChild(downloadLink);
-                messagesDiv.appendChild(reTranscribe);
+                showAfterTranscript(formDiv, fileInput, data);
 
             })
             .catch(error => {
@@ -80,4 +70,45 @@ function checkFormat(){
             removeFile();
         }
     }
+}
+
+function handleSidebar(){
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('transcriptionHistorySidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+
+    sidebarToggle.addEventListener('click', function(event) {
+        sidebar.classList.add('open');
+        event.stopPropagation();
+    });
+
+    closeSidebar.addEventListener('click', function() {
+        sidebar.classList.remove('open');
+    });
+
+    // to close the sidebar when clicking outside of it
+    document.addEventListener('click', function(event) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnToggle = sidebarToggle.contains(event.target);
+
+        if (!isClickInsideSidebar && !isClickOnToggle) {
+            sidebar.classList.remove('open');
+        }
+    });
+}
+
+function showAfterTranscript(formDiv, fileInput, data){
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.style.display = 'flex';
+    formDiv.appendChild(messagesDiv);
+
+    const downloadLink = createDownload(fileInput, data);
+
+    const reTranscribe = document.createElement('a');
+    reTranscribe.href = '/transcribe';
+    reTranscribe.textContent = 'Transcribe Again';
+    reTranscribe.className = 'download-link';
+
+    messagesDiv.appendChild(downloadLink);
+    messagesDiv.appendChild(reTranscribe);
 }

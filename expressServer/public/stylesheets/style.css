@@ -212,6 +212,10 @@ footer {
 
 /* Form container */
 #formDiv {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    position: relative;
     background-color: #fdfdff;
     padding: 20px;
     border-radius: 10px;
@@ -290,4 +294,80 @@ p#output {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+/* Sidebar styles */
+/* Sidebar styles */
+#transcriptionHistorySidebar {
+    position: fixed;
+    top: 0;
+    right: -36%; /* Start off screen */
+    width: 35%;
+    height: 100%;
+    background: #f7f9ff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: right 0.3s; /* Animate the right property */
+    z-index: 2000; /* Make sure it's above other content */
+}
+
+/* When the sidebar has the 'open' class, it slides in */
+#transcriptionHistorySidebar.open {
+    right: 0; /* Slide onto screen */
+}
+
+/* ... rest of your CSS ... */
+
+
+#transcriptionHistorySidebar h2 {
+    padding: 20px;
+}
+
+#transcriptionHistorySidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+#transcriptionHistorySidebar ul li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+#transcriptionHistorySidebar #closeSidebar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+}
+
+/* Style the sidebar toggle button */
+#sidebarToggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 10;
+}
+
+/* Style the icon inside the button */
+#sidebarToggle i, #closeSidebar i{
+    font-size: 23px;
+    color: #3B33C8;
+}
+
+#sidebarToggle i:hover, #closeSidebar i:hover{
+    color: #2923af;
+}
+
+#uploadForm{
+    width: 90%;
+    align-self: center;
+}
+
+#closeSidebar{
+    background: none;
+    border: none;
+    cursor: pointer;
 }
