@@ -1,3 +1,3 @@
-const MONGO_CONNECTION = 'mongodb+srv://sofmazepa:R-Xzpt3YA48mJC6@cluster0.lo04qnz.mongodb.net/?retryWrites=true&w=majority'
+const MONGO_CONNECTION = 'mongodb+srv://sofmazepa:JqBEdWLh!3Ma5Lh@main-database.scmde4j.mongodb.net/?retryWrites=true&w=majority'
 
 module.exports = MONGO_CONNECTION;

@@ -13,32 +13,27 @@ document.addEventListener("DOMContentLoaded", function() {
         formData.append('file', fileInput.files[0]);
         form.style.display = 'none';
 
-        fetch('/file', {
-            method: 'POST',
-            body: formData,
-        })
-            .then(response => {
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                return response.json();
-            })
-            .then(data => {
-
-                console.log('Success:', data);
-                showAfterTranscript(formDiv, fileInput, data);
-
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        postToTranscript(formData, formDiv, fileInput);
     });
 });
 
 function removeFile() {
     document.getElementById('fileUpload').value = '';
+}
+
+function checkFormat(){
+    const fileInput = document.getElementById('fileUpload');
+    const file = fileInput.files[0];
+    const messagesDiv = document.getElementById('small-m');
+    if (file) {
+        if (file.type === 'audio/mpeg' || file.type === 'audio/wav' || file.type === 'audio/x-wav') {
+            messagesDiv.textContent = '';
+        }
+        else {
+            messagesDiv.textContent = 'Please upload an MP3 or WAV file.';
+            removeFile();
+        }
+    }
 }
 
 function createDownload(fileInput, data){
@@ -57,21 +52,6 @@ function createDownload(fileInput, data){
     return downloadLink;
 }
 
-function checkFormat(){
-    const fileInput = document.getElementById('fileUpload');
-    const file = fileInput.files[0];
-    const messagesDiv = document.getElementById('small-m');
-    if (file) {
-        if (file.type === 'audio/mpeg' || file.type === 'audio/wav' || file.type === 'audio/x-wav') {
-            messagesDiv.textContent = '';
-        }
-        else {
-            messagesDiv.textContent = 'Please upload an MP3 or WAV file.';
-            removeFile();
-        }
-    }
-}
-
 function handleSidebar(){
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('transcriptionHistorySidebar');
@@ -80,6 +60,7 @@ function handleSidebar(){
     sidebarToggle.addEventListener('click', function(event) {
         sidebar.classList.add('open');
         event.stopPropagation();
+        fetchAndDisplayAudios();
     });
 
     closeSidebar.addEventListener('click', function() {
@@ -88,13 +69,85 @@ function handleSidebar(){
 
     // to close the sidebar when clicking outside of it
     document.addEventListener('click', function(event) {
-        const isClickInsideSidebar = sidebar.contains(event.target);
-        const isClickOnToggle = sidebarToggle.contains(event.target);
-
-        if (!isClickInsideSidebar && !isClickOnToggle) {
+        if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
             sidebar.classList.remove('open');
         }
     });
+}
+
+function postToTranscript(formData, formDiv, fileInput){
+    fetch('/file', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            showAfterTranscript(formDiv, fileInput, data);
+
+            let endpointData = {
+                filename: fileInput.files[0].name,
+                path: '../uploads/' + fileInput.files[0].name,
+                transcript: data['transcription']
+            }
+
+            return fetch('/transcribe/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(endpointData),
+            });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Create success:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function fetchAndDisplayAudios() {
+    fetch('/transcribe/audios')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const list = document.getElementById('transcriptionHistoryList');
+            list.innerHTML = '';
+            data.audios.forEach(audio => {
+
+                const listItem = document.createElement('li');
+                listItem.textContent = audio.filename;
+
+                const dateSpan = document.createElement('span');
+                dateSpan.textContent = ` - ${new Date(audio.date).toLocaleDateString()}`;
+                dateSpan.style.fontSize = 'small';
+
+                listItem.appendChild(dateSpan);
+                list.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching audios:', error);
+        });
 }
 
 function showAfterTranscript(formDiv, fileInput, data){

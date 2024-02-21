@@ -9,9 +9,6 @@ const {steps, benefits} = require('../public/variables')
 router.get('/', (req, res)=>{
     res.render('mainPage', {steps: steps, benefits: benefits});
 });
-router.get('/transcribe', (req, res)=>{
-    res.render('fileUpload');
-});
 
 router.post('/file', upload.single('file'), redirectToDjango);
 
