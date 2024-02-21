@@ -7,13 +7,15 @@ const WebSocket = require("ws");
 const MONGO_CONNECTION = require('./configs/mongo');
 const WS_PORT = require('./configs/port');
 
-const fileRoutes = require('./routes/fileRoutes')
+const routes = require('./routes')
 
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
 app.use(express.static('public'));
-app.use('/', fileRoutes);
+app.use(express.json());
+app.use('/', routes.fileRoutes);
+app.use('/transcribe', routes.audioRoutes);
 
 
 // websocket server setup (from practices/github)
