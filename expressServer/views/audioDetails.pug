@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    a(href="/" class="home-btn") ← Main Page
+
+    div#details
+        h1 #{audio.filename}
+
+        div#transcriptDisplay
+            p #{audio.transcript}
+
+        textarea#transcriptionEditor(style='display: none;') #{audio.transcript}
+
+        div#actionButtons
+            button.btn-lnk(onclick="toggleEditMode()") Edit
+            button.btn-lnk(onclick="downloadTranscript('#{audio.filename}', '#{audio.transcript}')") Download Transcript
+            button.btn-lnk(onclick=`removeAudio('${audio._id}')`) Remove Audio
+
+        div#editButtons(style='display: none;')
+
+            button.btn-lnk(onclick=`modifyTranscription('${audio._id}')`) Save Changes
+            button.btn-lnk(onclick="cancelEdit()") Cancel
+
+
+        script(type='text/javascript', src='/javascripts/details.js')

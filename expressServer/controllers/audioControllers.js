@@ -27,7 +27,7 @@ async function getAudioById(req, res) {
     try {
         const audioId = req.params.id;
         const audio = await Audio.findById(audioId);
-        res.render('audio-detail', { audio }); // Render a Pug template with audio details
+        res.render('audioDetails', { audio }); // Render a Pug template with audio details
     } catch (error) {
         res.status(404).send("Audio not found");
     }

@@ -3,21 +3,21 @@ extends layout
 block content
     a(href="/" class="home-btn") ← Main Page
 
-        div#formDiv
+    div#formDiv
 
-            button#sidebarToggle
-                i.fa-solid.fa-clock-rotate-left
+        button#sidebarToggle
+            i.fa-solid.fa-clock-rotate-left
 
-            form#uploadForm(action="javascript:void(0);", method="post", enctype="multipart/form-data")
-                label(for="fileUpload", style="font-weight:bold") Click the button or drop the file:
-                input(type="file", id="fileUpload", name="file", onchange="checkFormat()", required )
-                p#small-m
+        form#uploadForm(action="javascript:void(0);", method="post", enctype="multipart/form-data")
+            label(for="fileUpload", style="font-weight:bold") Click the button or drop the file:
+            input(type="file", id="fileUpload", name="file", onchange="checkFormat()", required )
+            p#small-m
 
-                input(type="button", value="Remove File", onclick="removeFile()")
-                input(type="submit", value="Transcribe File")
+            input(type="button", value="Remove File", onclick="removeFile()")
+            input(type="submit", value="Transcribe File")
 
-            p#output
-            div#messages
+        p#output
+        div#messages
 
     aside#transcriptionHistorySidebar
         div.sidebar-header

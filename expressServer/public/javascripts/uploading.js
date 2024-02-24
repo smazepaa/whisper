@@ -36,8 +36,7 @@ function checkFormat(){
     }
 }
 
-function createDownload(fileInput, data){
-    const originalFileName = fileInput.files[0].name;
+function createDownload(originalFileName, data){
     const baseFileName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
 
     const blob = new Blob([data['transcription']], { type: 'text/plain' });
@@ -142,6 +141,10 @@ function fetchAndDisplayAudios() {
                 const listItem = document.createElement('li');
                 listItem.textContent = audio.filename;
 
+                listItem.onclick = function() {
+                    window.location.href = `/transcribe/audios/${audio._id}`; // Use the unique identifier for the audio
+                };
+
                 const dateSpan = document.createElement('span');
                 dateSpan.textContent = new Date(audio.date).toLocaleDateString();
                 dateSpan.style.fontSize = 'small';
@@ -154,6 +157,7 @@ function fetchAndDisplayAudios() {
                 removeButton.appendChild(icon);
 
                 removeButton.onclick = function() {
+                    event.stopPropagation();
                     removeAudio(audio._id); // Replace with your unique identifier
                 };
 
@@ -172,7 +176,8 @@ function showAfterTranscript(formDiv, fileInput, data){
     messagesDiv.style.display = 'flex';
     formDiv.appendChild(messagesDiv);
 
-    const downloadLink = createDownload(fileInput, data);
+    const originalFileName = fileInput.files[0].name;
+    const downloadLink = createDownload(originalFileName, data);
 
     const reTranscribe = document.createElement('a');
     reTranscribe.href = '/transcribe';
@@ -199,4 +204,70 @@ function removeAudio(audioId) {
         .catch(error => {
             console.error('Error removing audio:', error);
         });
+}
+
+function toggleEditMode() {
+    const displayDiv = document.getElementById('transcriptDisplay');
+    const editArea = document.getElementById('transcriptionEditor');
+    const actionButtons = document.getElementById('actionButtons');
+    const editButtons = document.getElementById('editButtons');
+
+    displayDiv.style.display = 'none';
+    editArea.style.display = 'block';
+    actionButtons.style.display = 'none'; // Hide the action buttons
+    editButtons.style.display = 'block'; // Show the edit/save/cancel buttons
+    editArea.value = displayDiv.textContent.trim();
+}
+
+function cancelEdit() {
+    const displayDiv = document.getElementById('transcriptDisplay');
+    const editArea = document.getElementById('transcriptionEditor');
+    const actionButtons = document.getElementById('actionButtons');
+    const editButtons = document.getElementById('editButtons');
+
+    editArea.style.display = 'none';
+    displayDiv.style.display = 'block';
+    actionButtons.style.display = 'block';
+    editButtons.style.display = 'none';
+}
+
+function modifyTranscription(audioId) {
+    const editedTranscript = document.getElementById('transcriptionEditor').value;
+    console.log(`/transcribe/update/${audioId}`);
+
+    fetch(`/transcribe/update/${audioId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({transcript: editedTranscript}),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const displayDiv = document.getElementById('transcriptDisplay');
+            displayDiv.textContent = editedTranscript;
+            toggleEditMode();
+            fetchAndDisplayAudios();
+        })
+        .catch(error => {
+            console.error('Error saving edited transcript:', error);
+        });
+}
+
+function downloadTranscript() {
+    const transcript = document.getElementById('transcriptionEditor').value;
+    const blob = new Blob([transcript], {type: 'text/plain'});
+    const downloadUrl = URL.createObjectURL(blob);
+
+    const downloadLink = document.createElement('a');
+    downloadLink.href = downloadUrl;
+    downloadLink.download = 'transcription.txt';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
 }

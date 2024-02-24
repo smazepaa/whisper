@@ -82,6 +82,8 @@ main {
     text-decoration: none;
     transition: background-color 0.3s;
     font-weight: bolder;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .btn-lnk:hover {
@@ -403,4 +405,31 @@ p#output {
     background: none;
     border: none;
     cursor: pointer;
+}
+
+#details{
+    margin: 0 40px;
+}
+
+#transcriptDisplay, #transcriptionEditor {
+    background-color: white; /* Set a background color */
+    border: 1px solid #ccc; /* Add a border */
+    padding: 20px; /* Add some padding */
+    border-radius: 4px; /* Round the corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: add a shadow */
+    white-space: pre-wrap; /* Make sure line breaks are preserved */
+    font-size: 0.9em;
+    width: 60%;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif; /* Match the font */
+    resize: none;
+    line-height: initial;
+}
+
+#transcriptDisplay p{
+    margin:0;
+}
+
+#details button{
+    margin-right: 15px;
 }
