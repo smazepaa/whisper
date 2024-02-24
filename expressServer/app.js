@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const http = require("http");
 const WebSocket = require("ws");
+const cors = require('cors');
 
 const MONGO_CONNECTION = require('./configs/mongo');
 const WS_PORT = require('./configs/port');
@@ -17,6 +18,22 @@ app.use(express.json());
 app.use('/', routes.fileRoutes);
 app.use('/transcribe', routes.audioRoutes);
 
+const whitelist = ['http://localhost:3000','http://localhost:3001', 'http://localhost:8000',
+                           "http://127.0.0.1:3000", "http://127.0.0.1:3001", "http://127.0.0.1:8000"];
+const corsOptions = {
+  origin: originFunction,
+};
+
+app.use(cors(corsOptions));
+
+function originFunction(origin, callback) {
+  if (whitelist.includes(origin) || !origin) {
+    callback(null, true);
+  }
+  else {
+    callback(new Error('Not allowed by CORS'));
+  }
+}
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server: server });
