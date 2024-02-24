@@ -189,6 +189,10 @@ function removeAudio(audioId) {
         })
         .then(data => {
 
+            //const filepath = data.filepath;
+            // const filePath = path.join(__dirname, filepath);
+            // fs.unlink(filePath);
+
             const messagesDiv = document.getElementById('details');
             messagesDiv.innerHTML = "";
             messagesDiv.innerHTML = "<h1>Audio removed</h1>";

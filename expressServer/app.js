@@ -24,18 +24,20 @@ const wss = new WebSocket.Server({ server: server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
+  const pingInterval = setInterval(() => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.ping(); // Send a ping frame
+    }
+  }, 30000); // Send a ping every 30 seconds
+
   ws.on('message', (message) => {
     console.log(`Received message: ${message}`);
     wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
     });
   });
-
-  setInterval(() => {
-    ws.ping(); // Send a ping frame
-  }, 3000); // Send a ping every 30 seconds
 
   ws.on('open', () => {
     console.log('WebSocket connection opened');
@@ -44,13 +46,13 @@ wss.on('connection', (ws) => {
 
   ws.on('close', () => {
     console.log('Client disconnected');
+    clearInterval(pingInterval); // Clear the ping interval when client disconnects
   });
 
   ws.on('error', (error) => {
     console.error('WebSocket error:', error.message);
   });
 });
-
 
 const start = async () => {
   await mongoose.connect(MONGO_CONNECTION);

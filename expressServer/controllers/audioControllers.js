@@ -35,8 +35,9 @@ async function getAudioById(req, res) {
 
 async function deleteAudioById(req, res) {
     const audioId = req.params.id;
+    const filepath = Audio.findbyId(audioId).filepath;
     await Audio.deleteOne({ _id: audioId });
-    res.json({message: 'audio was deleted'});
+    res.json({filepath: filepath});
 }
 
 async function patchAudio(req, res) {
