@@ -1,10 +1,10 @@
 extends layout
 
 block content
-    a(href="/" class="home-btn") ← Main Page
+    a(href="/transcribe" class="home-btn") ← Back to Converter
 
     div#details
-        h1 #{audio.filename}
+        h1#name #{audio.filename}
 
         div#transcriptDisplay
             p #{audio.transcript}

@@ -36,21 +36,6 @@ function checkFormat(){
     }
 }
 
-function createDownload(originalFileName, data){
-    const baseFileName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
-
-    const blob = new Blob([data['transcription']], { type: 'text/plain' });
-    const downloadUrl = URL.createObjectURL(blob);
-
-    const downloadLink = document.createElement('a');
-    downloadLink.href = downloadUrl;
-    downloadLink.download = `${baseFileName}_transcription.txt`;
-    downloadLink.textContent = 'Download Transcript';
-    downloadLink.className = 'download-link';
-
-    return downloadLink;
-}
-
 function handleSidebar(){
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('transcriptionHistorySidebar');
@@ -112,8 +97,8 @@ function postToTranscript(formData, formDiv, fileInput){
         })
         .then(data => {
             console.log('Create success:', data);
+            showAfterTranscript(formDiv, fileInput, data._id);
 
-            showAfterTranscript(formDiv, fileInput, data);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -171,20 +156,24 @@ function fetchAndDisplayAudios() {
         });
 }
 
-function showAfterTranscript(formDiv, fileInput, data){
+function showAfterTranscript(formDiv, fileInput, id){
+    const output = document.getElementById('output');
+    output.textContent = "Transcription finished";
     const messagesDiv = document.getElementById('messages');
     messagesDiv.style.display = 'flex';
     formDiv.appendChild(messagesDiv);
 
-    const originalFileName = fileInput.files[0].name;
-    const downloadLink = createDownload(originalFileName, data);
+    const details = document.createElement('a');
+    details.href = `transcribe/audios/${id}`;
+    details.textContent = 'See Transcription';
+    details.className = 'download-link';
 
     const reTranscribe = document.createElement('a');
     reTranscribe.href = '/transcribe';
     reTranscribe.textContent = 'Transcribe Again';
     reTranscribe.className = 'download-link';
 
-    messagesDiv.appendChild(downloadLink);
+    messagesDiv.appendChild(details);
     messagesDiv.appendChild(reTranscribe);
 }
 
@@ -199,6 +188,11 @@ function removeAudio(audioId) {
             return response.json();
         })
         .then(data => {
+
+            const messagesDiv = document.getElementById('details');
+            messagesDiv.innerHTML = "";
+            messagesDiv.innerHTML = "<h1>Audio removed</h1>";
+
             fetchAndDisplayAudios();
         })
         .catch(error => {

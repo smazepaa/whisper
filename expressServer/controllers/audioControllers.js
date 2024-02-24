@@ -8,7 +8,7 @@ async function addAudioToDb(req, res) {
     const transcript = req.body.transcript;
 
     saveAudio(filename, path, transcript)
-        .then(audio => res.status(200).json({ message: 'Audio added', audio }))
+        .then(audio => res.status(200).json({ _id: audio._id }))
         .catch(error => res.status(500).json({ message: 'Issue with adding audio to DB', error }));
 }
 

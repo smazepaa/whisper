@@ -28,7 +28,7 @@ async def fetchNtranscribe(uploaded_file):
             result = model.transcribe(temp_path, fp16=False)
             await progress_task
 
-            await websocket.send('Transcription finished, preparing the text')
+            await websocket.send('Preparing the text')
         return {'transcription': result["text"]}
 
     except Exception as e:
