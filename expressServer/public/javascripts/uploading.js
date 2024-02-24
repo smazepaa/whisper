@@ -143,13 +143,18 @@ function fetchAndDisplayAudios() {
                 listItem.textContent = audio.filename;
 
                 const dateSpan = document.createElement('span');
-                dateSpan.textContent = ` - ${new Date(audio.date).toLocaleDateString()}`;
+                dateSpan.textContent = new Date(audio.date).toLocaleDateString();
                 dateSpan.style.fontSize = 'small';
 
                 const removeButton = document.createElement('button');
-                removeButton.textContent = 'Remove';
+                removeButton.className = 'remove-audio-button';
+                const icon = document.createElement('i');
+                icon.className = 'fa-solid fa-xmark';
+
+                removeButton.appendChild(icon);
+
                 removeButton.onclick = function() {
-                    removeAudio(audio._id);
+                    removeAudio(audio._id); // Replace with your unique identifier
                 };
 
                 listItem.appendChild(dateSpan);

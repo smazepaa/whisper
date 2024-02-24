@@ -297,50 +297,78 @@ p#output {
     justify-content: center;
 }
 
-/* Sidebar styles */
-/* Sidebar styles */
 #transcriptionHistorySidebar {
     position: fixed;
     top: 0;
-    right: -36%; /* Start off screen */
+    right: -36%;
     width: 35%;
     height: 100%;
     background: #f7f9ff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    transition: right 0.3s; /* Animate the right property */
-    z-index: 2000; /* Make sure it's above other content */
+    transition: right 0.3s;
+    z-index: 2000;
 }
 
-/* When the sidebar has the 'open' class, it slides in */
 #transcriptionHistorySidebar.open {
-    right: 0; /* Slide onto screen */
+    right: 0;
 }
 
-/* ... rest of your CSS ... */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #EEF2FF;
+    background-color: #3d34cb;
+    padding: 16px;
+    margin-top: 0;
+    border-bottom: 1px solid #e7e7e7;
+}
 
 
 #transcriptionHistorySidebar h2 {
-    padding: 20px;
+    margin: 0;
+    font-size: 1.25em;
 }
 
 #transcriptionHistorySidebar ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 #transcriptionHistorySidebar ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+#transcriptionHistorySidebar ul li span {
+    margin-left: auto;
 }
 
 #transcriptionHistorySidebar #closeSidebar {
-    position: absolute;
     top: 10px;
     right: 10px;
     padding: 5px 10px;
 }
 
-/* Style the sidebar toggle button */
+.remove-audio-button {
+    padding: 8px 12px;
+    margin-left: 15px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.remove-audio-button:hover {
+    background-color: #ff7875;
+}
+
 #sidebarToggle {
     position: absolute;
     top: 10px;
@@ -352,13 +380,17 @@ p#output {
     z-index: 10;
 }
 
-/* Style the icon inside the button */
-#sidebarToggle i, #closeSidebar i{
+#sidebarToggle i{
     font-size: 23px;
     color: #3B33C8;
 }
 
-#sidebarToggle i:hover, #closeSidebar i:hover{
+#closeSidebar i{
+    font-size: 23px;
+    color:#EEF2FF;
+}
+
+#sidebarToggle i:hover{
     color: #2923af;
 }
 

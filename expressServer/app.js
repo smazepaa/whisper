@@ -18,7 +18,6 @@ app.use('/', routes.fileRoutes);
 app.use('/transcribe', routes.audioRoutes);
 
 
-// websocket server setup (from practices/github)
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server: server });
 
