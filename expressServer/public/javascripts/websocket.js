@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const websocket = new WebSocket(wsUri);
 
     function writeToScreen(message) {
+        // output.style.display = "block";
         let p = output.querySelector("p");
         if (!p) {
             p = document.createElement("p");

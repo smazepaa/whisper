@@ -91,8 +91,6 @@ function postToTranscript(formData, formDiv, fileInput){
         .then(data => {
             console.log('Success:', data);
 
-            showAfterTranscript(formDiv, fileInput, data);
-
             let endpointData = {
                 filename: fileInput.files[0].name,
                 path: '../uploads/' + fileInput.files[0].name,
@@ -115,6 +113,8 @@ function postToTranscript(formData, formDiv, fileInput){
         })
         .then(data => {
             console.log('Create success:', data);
+
+            showAfterTranscript(formDiv, fileInput, data);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -132,8 +132,13 @@ function fetchAndDisplayAudios() {
         .then(data => {
             const list = document.getElementById('transcriptionHistoryList');
             list.innerHTML = '';
-            data.audios.forEach(audio => {
 
+            // Sort the audios by date in descending order
+            const sortedAudios = data.audios.sort((a, b) => {
+                return new Date(b.date) - new Date(a.date);
+            });
+
+            data.audios.forEach(audio => {
                 const listItem = document.createElement('li');
                 listItem.textContent = audio.filename;
 
@@ -141,7 +146,14 @@ function fetchAndDisplayAudios() {
                 dateSpan.textContent = ` - ${new Date(audio.date).toLocaleDateString()}`;
                 dateSpan.style.fontSize = 'small';
 
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.onclick = function() {
+                    removeAudio(audio._id);
+                };
+
                 listItem.appendChild(dateSpan);
+                listItem.appendChild(removeButton);
                 list.appendChild(listItem);
             });
         })
@@ -164,4 +176,22 @@ function showAfterTranscript(formDiv, fileInput, data){
 
     messagesDiv.appendChild(downloadLink);
     messagesDiv.appendChild(reTranscribe);
+}
+
+function removeAudio(audioId) {
+    fetch(`/transcribe/delete/${audioId}`, {
+        method: 'DELETE',
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            fetchAndDisplayAudios();
+        })
+        .catch(error => {
+            console.error('Error removing audio:', error);
+        });
 }

@@ -15,6 +15,8 @@ async def fetchNtranscribe(uploaded_file):
 
         async with websockets.connect('ws://127.0.0.1:3001') as websocket:
             await websocket.send('File uploaded to server')
+            await websocket.pong('pong')
+            print('pong')
 
             audio = AudioSegment.from_file(temp_path)
             audio_length_seconds = len(audio) / 1000.0
@@ -24,11 +26,11 @@ async def fetchNtranscribe(uploaded_file):
             # transcription and progress updates concurrently
             progress_task = asyncio.create_task(send_progress_updates(estimate_transcription_time, websocket))
             model = whisper.load_model("base")
-            await websocket.send('Transcription started')
+            await websocket.send('Transcription is starting soon')
             result = model.transcribe(temp_path, fp16=False)
             await progress_task
 
-            await websocket.send('Transcription finished')
+            await websocket.send('Transcription finished, preparing the text')
         return {'transcription': result["text"]}
 
     except Exception as e:
@@ -38,9 +40,18 @@ async def fetchNtranscribe(uploaded_file):
 async def send_progress_updates(duration, websocket):
     start_time = asyncio.get_running_loop().time()
     while True:
+        asyncio.get_event_loop().run_until_complete(pong())
         elapsed_time = asyncio.get_running_loop().time() - start_time
         progress = (elapsed_time / duration) * 100
         if progress >= 100:
             break
         await websocket.send(f'Progress: {int(min(progress, 100))}%')
+        await websocket.pong('pong')
+        print('pong')
         await asyncio.sleep(0.1)
+
+
+async def pong():
+    uri = "ws://localhost:3001"
+    async with websockets.connect(uri) as websocket:
+        await websocket.send('pong')

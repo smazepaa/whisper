@@ -34,6 +34,10 @@ wss.on('connection', (ws) => {
     });
   });
 
+  setInterval(() => {
+    ws.ping(); // Send a ping frame
+  }, 3000); // Send a ping every 30 seconds
+
   ws.on('open', () => {
     console.log('WebSocket connection opened');
     ws.send(JSON.stringify({ method: 'subscribed' }));

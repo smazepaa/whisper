@@ -34,7 +34,14 @@ async function getAudioByFilename(req, res) {
     }
 }
 
+async function deleteAudioById(req, res) {
+    const audioId = req.params.id;
+    await Audio.deleteOne({ _id: audioId });
+    res.send({message: 'audio was deleted'});
+}
+
 module.exports = {
     getAllAudios,
-    addAudioToDb
+    addAudioToDb,
+    deleteAudioById
 }
