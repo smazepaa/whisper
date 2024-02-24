@@ -247,10 +247,13 @@ function modifyTranscription(audioId) {
             return response.json();
         })
         .then(data => {
+
             const displayDiv = document.getElementById('transcriptDisplay');
             displayDiv.textContent = editedTranscript;
-            toggleEditMode();
+            // toggleEditMode();
+            cancelEdit();
             fetchAndDisplayAudios();
+
         })
         .catch(error => {
             console.error('Error saving edited transcript:', error);

@@ -408,7 +408,7 @@ p#output {
 }
 
 #details{
-    margin: 0 40px;
+    margin: 0 40px 40px 40px;
 }
 
 #transcriptDisplay, #transcriptionEditor {
@@ -424,6 +424,7 @@ p#output {
     font-family: 'Montserrat', sans-serif; /* Match the font */
     resize: none;
     line-height: initial;
+    height:fit-content;
 }
 
 #transcriptDisplay p{
