@@ -1,48 +1,25 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        title Textify - Convert Audio to Text
-        link(rel="stylesheet" href="/stylesheets/style.css")
-        link(rel="preconnect" href="https://fonts.googleapis.com")
-        link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
-        link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Noto+Sans+Kannada:wght@100..900&display=swap" rel="stylesheet")
-        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css")
-    body
-        header
-            nav
-                div#logo Textify
-                ul
-                    li
-                        a(href="/") Features
-                    li
-                        a(href="#step-by-step") Instruction
-                    li
-                        a(href="/transcribe") Converter
-        main#main-part
-            div#big-text
-                h1 Convert Audio to Text
-                p Effortlessly convert audio files into accurate text transcripts.
+extends layout
+
+block content
+    div#big-text
+        h1 Convert Audio to Text
+        p Effortlessly convert audio files into accurate text transcripts.
+        a.btn-lnk(href="/transcribe") Try now →
+
+    div#benefits
+        each benefit in benefits
+            div.bnft
+                strong= benefit.title
+                p= benefit.description
+
+    div#step-by-step
+        div.content-wrapper
+            div
+                h2 It is easier than you think
+                ol
+                    each step in steps
+                        li
+                            strong= step.title
+                            p= step.description
                 a.btn-lnk(href="/transcribe") Try now →
-
-            div#benefits
-                each benefit in benefits
-                    div.bnft
-                        strong= benefit.title
-                        p= benefit.description
-
-            div#step-by-step
-                div.content-wrapper
-                    div
-                        h2 It is easier than you think
-                        ol
-                            each step in steps
-                                li
-                                    strong= step.title
-                                    p= step.description
-                        a.btn-lnk(href="/transcribe") Try now →
-                    img(src="https://i.pinimg.com/564x/90/82/82/9082829b9e25179daf4a6f15f17c966e.jpg" alt="Descriptive Text" class="step-image")
-        footer
-            p © 2024 TEXTIFY AUDIO-TEXT CONVERTER
-        script(src="scripts/uploading.js")
+            img(src="https://i.pinimg.com/564x/90/82/82/9082829b9e25179daf4a6f15f17c966e.jpg" alt="Descriptive Text" class="step-image")
