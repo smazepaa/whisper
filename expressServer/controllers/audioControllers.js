@@ -37,11 +37,11 @@ async function getAllAudios(req, res, next){
     }
 }
 
-async function getAudioById(req, res){
-    const audioId = req.params.id;
+async function getAudioById(req, res, next){
     let audio;
     let cashed = false;
     try {
+        const audioId = req.params.id;
         const cashedResult = await redisClient.get(audioId);
         if (cashedResult) {
             cashed = true;
@@ -56,7 +56,7 @@ async function getAudioById(req, res){
         res.render('audioDetails', { audio });
     }
     catch (error) {
-        res.status(404).send(error);
+        next(error);
     }
 }
 
@@ -66,7 +66,7 @@ async function deleteAudioById(req, res) {
     res.json({message: 'audio deleted'});
 }
 
-async function patchAudio(req, res) {
+async function patchAudio(req, res, next) {
     const audioId = req.params.id;
     const audioData = req.body;
 
@@ -75,7 +75,8 @@ async function patchAudio(req, res) {
         res.status(200).json({ message: 'Audio updated successfully' });
     } catch (error) {
         console.error('Error updating audio:', error);
-        res.status(500).json({ message: 'Error updating audio', error });
+        // res.status(500).json({ message: 'Error updating audio', error });
+        next(error);
     }
 }
 

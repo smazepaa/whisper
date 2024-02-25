@@ -3,12 +3,11 @@ const ErrorHandler = (err, req, res, next) => {
     const errStatus = err.statusCode || 500;
     const errMsg = err.message || 'Something went wrong on the server.';
 
-    if (errStatus === 404) {
-        res.status(errStatus).redirect(`/error-page?error=${encodeURIComponent(errMsg)}`)
-    } else if (errStatus >= 500) {
-        if (errMsg.includes("Cannot read properties of null")) {
-            res.status(errStatus).redirect(`/error-page?error=${encodeURIComponent('Transcript not found')}`);
-        }
+    if (errMsg.includes("Cannot read properties of null")) {
+        res.status(errStatus).redirect(`/error-page?error=${encodeURIComponent('Transcript not found')}`);
+    }
+    else if(errMsg.includes("Cast to ObjectId failed for value")){
+        res.status(errStatus).redirect(`/error-page?error=${encodeURIComponent('Transcript not found, invalid Id')}`);
     }
     res.status(errStatus).redirect(`/error-page?error=${encodeURIComponent(errMsg)}`);
 };
