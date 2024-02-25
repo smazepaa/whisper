@@ -276,7 +276,7 @@ p#output {
     margin-top: 40px;
 }
 
-.home-btn:hover {
+.home-btn:hover, #error a:hover {
     color: #2923af;
 }
 
@@ -433,4 +433,20 @@ p#output {
 
 #details button{
     margin-right: 15px;
+}
+
+#error{
+    margin-left: 40px;
+}
+
+#error a{
+    font-weight:bolder;
+    color: black;
+    padding: 10px 20px 10px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    margin-top: 40px;
 }

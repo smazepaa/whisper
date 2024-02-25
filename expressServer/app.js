@@ -9,6 +9,7 @@ const morgan = require('morgan');
 
 const MONGO_CONNECTION = require('./configs/mongo');
 const WS_PORT = require('./configs/port');
+const ErrorHandler = require("./middlewares/errorHandler.js");
 
 const routes = require('./routes')
 
@@ -19,6 +20,16 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use('/', routes.fileRoutes);
 app.use('/transcribe', routes.audioRoutes);
+
+app.use((req, res, next) => {
+  // You can create a new Error object and set its properties according to your needs
+  const err = new Error('Not Found');
+  err.statusCode = 404;
+  err.message = 'The requested resource was not found on this server.';
+  next(err); // Pass the error to the next middleware, which is your ErrorHandler
+});
+
+app.use(ErrorHandler)
 
 const whitelist = ['http://localhost:3000','http://localhost:3001', 'http://localhost:8000',
                            "http://127.0.0.1:3000", "http://127.0.0.1:3001", "http://127.0.0.1:8000"];

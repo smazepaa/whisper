@@ -12,4 +12,11 @@ router.get('/', (req, res)=>{
 
 router.post('/file', upload.single('file'), redirectToDjango);
 
+router.get('/favicon.ico', (req, res) => res.status(204));
+
+router.get('/error-page', (req, res) => {
+    const errorMessage = req.query.error || 'Unknown error'; // Default message if none provided
+    res.render('errorPage', { message: errorMessage });
+});
+
 module.exports = router;
