@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const http = require("http");
 const WebSocket = require("ws");
 const cors = require('cors');
+const fs = require('fs');
+const morgan = require('morgan');
 
 const MONGO_CONNECTION = require('./configs/mongo');
 const WS_PORT = require('./configs/port');
@@ -34,6 +36,12 @@ function originFunction(origin, callback) {
     callback(new Error('Not allowed by CORS'));
   }
 }
+
+const logFile = fs.createWriteStream('./logs/myLogFile.log', {flags: 'a'});
+const logFileErrors = fs.createWriteStream('./logs/myLogFileErrors.log', {flags: 'a'});
+
+app.use(morgan('common', { stream: logFile }));
+app.use(morgan('common', { stream: logFileErrors, skip: function (req, res) { return res.statusCode < 400 }  }));
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server: server });

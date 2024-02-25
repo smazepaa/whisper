@@ -27,7 +27,7 @@ async function getAudioById(req, res) {
     try {
         const audioId = req.params.id;
         const audio = await Audio.findById(audioId);
-        res.render('audioDetails', { audio }); // Render a Pug template with audio details
+        res.render('audioDetails', { audio });
     } catch (error) {
         res.status(404).send("Audio not found");
     }
@@ -35,9 +35,8 @@ async function getAudioById(req, res) {
 
 async function deleteAudioById(req, res) {
     const audioId = req.params.id;
-    const filepath = Audio.findbyId(audioId).filepath;
     await Audio.deleteOne({ _id: audioId });
-    res.json({filepath: filepath});
+    res.json({message: 'audio deleted'});
 }
 
 async function patchAudio(req, res) {

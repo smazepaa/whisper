@@ -189,15 +189,12 @@ function removeAudio(audioId) {
         })
         .then(data => {
 
-            //const filepath = data.filepath;
-            // const filePath = path.join(__dirname, filepath);
-            // fs.unlink(filePath);
+            fetchAndDisplayAudios();
 
             const messagesDiv = document.getElementById('details');
             messagesDiv.innerHTML = "";
             messagesDiv.innerHTML = "<h1>Audio removed</h1>";
 
-            fetchAndDisplayAudios();
         })
         .catch(error => {
             console.error('Error removing audio:', error);
@@ -246,6 +243,19 @@ function modifyTranscription(audioId) {
             console.error('Error saving edited transcript:', error);
         });
 }
+
+function toggleEditMode() {
+    const displayDiv = document.getElementById('transcriptDisplay');
+    const editArea = document.getElementById('transcriptionEditor');
+    const actionButtons = document.getElementById('actionButtons');
+    const editButtons = document.getElementById('editButtons');
+    displayDiv.style.display = 'none';
+    editArea.style.display = 'block';
+    actionButtons.style.display = 'none'; // Hide the action buttons
+    editButtons.style.display = 'block'; // Show the edit/save/cancel buttons
+    editArea.value = displayDiv.textContent.trim();
+}
+
 
 function downloadTranscript() {
     const transcript = document.getElementById('transcriptionEditor').value;
