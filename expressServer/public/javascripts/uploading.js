@@ -65,11 +65,9 @@ function postToTranscript(formData, formDiv, fileInput){
         body: formData,
     })
         .then(response => {
-
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
             return response.json();
         })
         .then(data => {
@@ -79,7 +77,7 @@ function postToTranscript(formData, formDiv, fileInput){
                 filename: fileInput.files[0].name,
                 path: '../uploads/' + fileInput.files[0].name,
                 transcript: data['transcription']
-            }
+            };
 
             return fetch('/transcribe/create', {
                 method: 'POST',
@@ -98,12 +96,33 @@ function postToTranscript(formData, formDiv, fileInput){
         .then(data => {
             console.log('Create success:', data);
             showAfterTranscript(formDiv, fileInput, data._id);
-
         })
         .catch(error => {
             console.error('Error:', error);
+            displayError(formDiv, error);
         });
 }
+
+function displayError(formDiv, error) {
+    // Clear the form div
+    formDiv.innerHTML = '';
+
+    // Create error message
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = "An error occurred on the server side: " + error.message;
+    errorMessage.style.color = 'red';
+
+    // Create try again button
+    const tryAgain = document.createElement('a');
+    tryAgain.href = '/transcribe';
+    tryAgain.textContent = 'Try Again';
+    tryAgain.className = 'download-link';
+
+    // Append error message and button to form div
+    formDiv.appendChild(errorMessage);
+    formDiv.appendChild(tryAgain);
+}
+
 
 function fetchAndDisplayAudios() {
     fetch('/transcribe/audios')
@@ -265,7 +284,6 @@ function toggleEditMode() {
     editButtons.style.display = 'block'; // Show the edit/save/cancel buttons
     editArea.value = displayDiv.textContent.trim();
 }
-
 
 function downloadTranscript() {
     const transcript = document.getElementById('transcriptionEditor').value;

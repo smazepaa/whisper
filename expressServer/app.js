@@ -3,8 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const http = require("http");
 const WebSocket = require("ws");
-const cors = require('cors');
 const fs = require('fs');
+const cors = require('cors');
 const morgan = require('morgan');
 
 const MONGO_CONNECTION = require('./configs/mongo');
@@ -22,11 +22,10 @@ app.use('/', routes.fileRoutes);
 app.use('/transcribe', routes.audioRoutes);
 
 app.use((req, res, next) => {
-  // You can create a new Error object and set its properties according to your needs
-  const err = new Error('Not Found');
-  err.statusCode = 404;
-  err.message = 'The requested resource was not found on this server.';
-  next(err); // Pass the error to the next middleware, which is your ErrorHandler
+    const err = new Error('Not Found');
+    err.statusCode = 404;
+    err.message = 'The requested resource was not found on this server.';
+    next(err);
 });
 
 app.use(ErrorHandler)
@@ -40,12 +39,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 function originFunction(origin, callback) {
-  if (whitelist.includes(origin) || !origin) {
-    callback(null, true);
-  }
-  else {
-    callback(new Error('Not allowed by CORS'));
-  }
+    if (whitelist.includes(origin) || !origin) {
+      callback(null, true);
+    }
+    else {
+      callback(new Error('Not allowed by CORS'));
+    }
 }
 
 const logFile = fs.createWriteStream('./logs/myLogFile.log', {flags: 'a'});
@@ -58,44 +57,44 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server: server });
 
 wss.on('connection', (ws) => {
-  console.log('Client connected');
+    console.log('Client connected');
 
-  const pingInterval = setInterval(() => {
-    if (ws.readyState === WebSocket.OPEN) {
-      ws.ping(); // Send a ping frame
-    }
-  }, 30000); // Send a ping every 30 seconds
-
-  ws.on('message', (message) => {
-    console.log(`Received message: ${message}`);
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
+    const pingInterval = setInterval(() => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.ping(); // Send a ping frame
       }
+    }, 30000); // Send a ping every 30 seconds
+
+    ws.on('message', (message) => {
+      console.log(`Received message: ${message}`);
+      wss.clients.forEach((client) => {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          client.send(message);
+        }
+      });
     });
-  });
 
-  ws.on('open', () => {
-    console.log('WebSocket connection opened');
-    ws.send(JSON.stringify({ method: 'subscribed' }));
-  });
+    ws.on('open', () => {
+      console.log('WebSocket connection opened');
+      ws.send(JSON.stringify({ method: 'subscribed' }));
+    });
 
-  ws.on('close', () => {
-    console.log('Client disconnected');
-    clearInterval(pingInterval); // Clear the ping interval when client disconnects
-  });
+    ws.on('close', () => {
+      console.log('Client disconnected');
+      clearInterval(pingInterval); // Clear the ping interval when client disconnects
+    });
 
-  ws.on('error', (error) => {
-    console.error('WebSocket error:', error.message);
-  });
+    ws.on('error', (error) => {
+      console.error('WebSocket error:', error.message);
+    });
 });
 
 const start = async () => {
-  await mongoose.connect(MONGO_CONNECTION);
-  console.log('Database connected');
-  server.listen(WS_PORT, () => {
-    console.log(`WS Server is running on http://localhost:${WS_PORT}`);
-  });
+    await mongoose.connect(MONGO_CONNECTION);
+    console.log('Database connected');
+    server.listen(WS_PORT, () => {
+      console.log(`WS Server is running on http://localhost:${WS_PORT}`);
+    });
 };
 
 start();

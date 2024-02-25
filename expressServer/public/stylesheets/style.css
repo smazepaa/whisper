@@ -311,6 +311,10 @@ p#output {
     z-index: 2000;
 }
 
+#transcriptionHistorySidebar li{
+    cursor: pointer;
+}
+
 #transcriptionHistorySidebar.open {
     right: 0;
 }
