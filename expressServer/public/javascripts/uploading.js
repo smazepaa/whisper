@@ -201,11 +201,17 @@ function removeAudio(audioId) {
         });
 }
 
+let originalContent = "";
+
 function cancelEdit() {
     const displayDiv = document.getElementById('transcriptDisplay');
     const editArea = document.getElementById('transcriptionEditor');
     const actionButtons = document.getElementById('actionButtons');
     const editButtons = document.getElementById('editButtons');
+
+    // Revert to original content
+    displayDiv.textContent = originalContent;
+    editArea.value = originalContent;
 
     editArea.style.display = 'none';
     displayDiv.style.display = 'block';
@@ -249,6 +255,10 @@ function toggleEditMode() {
     const editArea = document.getElementById('transcriptionEditor');
     const actionButtons = document.getElementById('actionButtons');
     const editButtons = document.getElementById('editButtons');
+
+    // Save the current content before editing
+    originalContent = displayDiv.textContent.trim();
+
     displayDiv.style.display = 'none';
     editArea.style.display = 'block';
     actionButtons.style.display = 'none'; // Hide the action buttons

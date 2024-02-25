@@ -36,12 +36,13 @@ async def fetchNtranscribe(uploaded_file):
             audio = AudioSegment.from_file(temp_path)
             audio_length_seconds = len(audio) / 1000.0
             estimate_transcription_time = audio_length_seconds * 0.5
-            transcription_task = asyncio.create_task(transcribe_audio(temp_path))
-            progress_task = asyncio.create_task(send_progress_updates(estimate_transcription_time, websocket))
-            transcription_result = await transcription_task
-            progress_task.cancel()
+            # Run both tasks concurrently
+            transcription_task = transcribe_audio(temp_path)
+            progress_task = send_progress_updates(estimate_transcription_time, websocket)
+            # Wait for both tasks to complete
+            transcription_result, _ = await asyncio.gather(transcription_task, progress_task)
             await websocket.send('Transcription finished')
-        return {'transcription': transcription_result}
+            return {'transcription': transcription_result}
     finally:
         os.close(fd)
         os.unlink(temp_path)
