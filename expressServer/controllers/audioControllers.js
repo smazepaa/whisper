@@ -49,7 +49,8 @@ async function getAudioById(req, res, next){
         }
         else{
             audio = await Audio.findById(audioId);
-            await redisClient.set(audioId, JSON.stringify(audio));
+            // set the expiration time to 3600 seconds (1 hour)
+            await redisClient.setEx(audioId, 3600, JSON.stringify(audio));
         }
 
         console.log('from cache', cashed);
