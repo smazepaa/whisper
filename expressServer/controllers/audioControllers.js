@@ -52,7 +52,6 @@ async function getAudioById(req, res, next){
             // set the expiration time to 3600 seconds (1 hour)
             await redisClient.setEx(audioId, 3600, JSON.stringify(audio));
         }
-
         console.log('from cache', cashed);
         res.render('audioDetails', { audio });
     }
@@ -61,10 +60,17 @@ async function getAudioById(req, res, next){
     }
 }
 
-async function deleteAudioById(req, res) {
+async function deleteAudioById(req, res, next) {
     const audioId = req.params.id;
-    await Audio.deleteOne({ _id: audioId });
-    res.json({message: 'audio deleted'});
+    try {
+        await Audio.deleteOne({ _id: audioId });
+        await redisClient.del(audioId);
+
+        res.status(200).json({ message: 'Audio deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting audio:', error);
+        next(error);
+    }
 }
 
 async function patchAudio(req, res, next) {
@@ -72,14 +78,19 @@ async function patchAudio(req, res, next) {
     const audioData = req.body;
 
     try {
-        await updateAudio(audioId, audioData);
-        res.status(200).json({ message: 'Audio updated successfully' });
+        const updatedAudio = await updateAudio(audioId, audioData);
+        if (updatedAudio) {
+            await redisClient.setEx(audioId, 3600, JSON.stringify(updatedAudio));
+            res.status(200).json({ message: 'Audio updated successfully', audio: updatedAudio });
+        } else {
+            res.status(404).json({ message: 'Audio not found' });
+        }
     } catch (error) {
         console.error('Error updating audio:', error);
-        // res.status(500).json({ message: 'Error updating audio', error });
         next(error);
     }
 }
+
 
 module.exports = {
     getAllAudios,
