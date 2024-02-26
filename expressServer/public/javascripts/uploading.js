@@ -104,21 +104,17 @@ function postToTranscript(formData, formDiv, fileInput){
 }
 
 function displayError(formDiv, error) {
-    // Clear the form div
     formDiv.innerHTML = '';
 
-    // Create error message
     const errorMessage = document.createElement('p');
     errorMessage.textContent = "An error occurred on the server side: " + error.message;
     errorMessage.style.color = 'red';
 
-    // Create try again button
     const tryAgain = document.createElement('a');
     tryAgain.href = '/transcribe';
     tryAgain.textContent = 'Try Again';
     tryAgain.className = 'download-link';
 
-    // Append error message and button to form div
     formDiv.appendChild(errorMessage);
     formDiv.appendChild(tryAgain);
 }
@@ -136,7 +132,6 @@ function fetchAndDisplayAudios() {
             const list = document.getElementById('transcriptionHistoryList');
             list.innerHTML = '';
 
-            // Sort the audios by date in descending order
             const sortedAudios = data.audios.sort((a, b) => {
                 return new Date(b.date) - new Date(a.date);
             });
@@ -162,7 +157,7 @@ function fetchAndDisplayAudios() {
 
                 removeButton.onclick = function() {
                     event.stopPropagation();
-                    removeAudio(audio._id); // Replace with your unique identifier
+                    removeAudio(audio._id);
                 };
 
                 listItem.appendChild(dateSpan);
@@ -225,18 +220,25 @@ let originalContent = "";
 function cancelEdit() {
     const displayDiv = document.getElementById('transcriptDisplay');
     const editArea = document.getElementById('transcriptionEditor');
-    const actionButtons = document.getElementById('actionButtons');
-    const editButtons = document.getElementById('editButtons');
 
-    // Revert to original content
+    untoggleEdit();
     displayDiv.textContent = originalContent;
     editArea.value = originalContent;
+
+}
+
+function untoggleEdit(){
+    const displayDiv = document.getElementById('transcriptDisplay');
+    const editArea = document.getElementById('transcriptionEditor');
+    const actionButtons = document.getElementById('actionButtons');
+    const editButtons = document.getElementById('editButtons');
 
     editArea.style.display = 'none';
     displayDiv.style.display = 'block';
     actionButtons.style.display = 'block';
     editButtons.style.display = 'none';
 }
+
 
 function modifyTranscription(audioId) {
     const editedTranscript = document.getElementById('transcriptionEditor').value;
@@ -259,8 +261,7 @@ function modifyTranscription(audioId) {
 
             const displayDiv = document.getElementById('transcriptDisplay');
             displayDiv.textContent = editedTranscript;
-            // toggleEditMode();
-            cancelEdit();
+            untoggleEdit();
             fetchAndDisplayAudios();
 
         })
@@ -275,13 +276,12 @@ function toggleEditMode() {
     const actionButtons = document.getElementById('actionButtons');
     const editButtons = document.getElementById('editButtons');
 
-    // Save the current content before editing
     originalContent = displayDiv.textContent.trim();
 
     displayDiv.style.display = 'none';
     editArea.style.display = 'block';
-    actionButtons.style.display = 'none'; // Hide the action buttons
-    editButtons.style.display = 'block'; // Show the edit/save/cancel buttons
+    actionButtons.style.display = 'none';
+    editButtons.style.display = 'block';
     editArea.value = displayDiv.textContent.trim();
 }
 

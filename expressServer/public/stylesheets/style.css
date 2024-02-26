@@ -150,7 +150,7 @@ main {
 }
 
 .step-image {
-    max-width: 20%;
+    max-width: 35%;
     margin-left: 5vw;
     flex-shrink: 0;
     align-self: center;
@@ -416,16 +416,16 @@ p#output {
 }
 
 #transcriptDisplay, #transcriptionEditor {
-    background-color: white; /* Set a background color */
-    border: 1px solid #ccc; /* Add a border */
-    padding: 20px; /* Add some padding */
-    border-radius: 4px; /* Round the corners */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: add a shadow */
-    white-space: pre-wrap; /* Make sure line breaks are preserved */
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    white-space: pre-wrap;
     font-size: 0.9em;
     width: 60%;
     margin-bottom: 20px;
-    font-family: 'Montserrat', sans-serif; /* Match the font */
+    font-family: 'Montserrat', sans-serif;
     resize: none;
     line-height: initial;
     height:fit-content;
