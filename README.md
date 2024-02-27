@@ -133,5 +133,34 @@ After starting all three servers to transcribe an audio file:
 <br><br>
 <img width="960" alt="Screenshot 2024-02-26 213755" src="https://github.com/smazepaa/whisper/assets/118920409/d4183ae0-4709-470e-9958-118ce11ae620">
 
-#
-Textify stands out as a powerful and efficient audio-to-text conversion platform, leveraging state-of-the-art technology and innovative features to deliver high-quality transcriptions. Its robust technology stack, including WebSocket communication for real-time updates and Redis for enhanced performance, ensures a seamless user experience. Whether for professional or personal use, Textify simplifies the transcription process, making it accessible and convenient for a wide range of users. With its commitment to accuracy, efficiency, and user satisfaction, Textify is poised to become a go-to solution for audio transcription needs.
+
+## Contribution
+
+We welcome contributions from the community. If you're interested in improving Textify or adding new features, please refer to our contributing guidelines.
+
+### Quickstart:
+
+- **Fork & Pull**: Fork the repo, make your changes, and submit a pull request.
+- **Issues**: Use [GitHub Issues](https://github.com/smazepaa/whisper/issues) for bug reports or feature suggestions.
+- **Coding Style**: Follow our coding style of 2 spaces for indentation.
+
+### Pull Requests:
+
+1. Fork the repo.
+2. Create your branch (`git checkout -b my-feature`).
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin my-feature`).
+5. Open a new Pull Request.
+
+### Bug Reporting:
+
+- Include a clear title and description.
+- Steps to reproduce the bug, if possible with sample code.
+- What you expected to happen and what actually happened.
+
+
+## Discover Simplicity with Textify
+
+With Textify, transform your spoken words into written text effortlessly. Our platform bridges the gap between speech and text, making it easier for everyone to capture, share, and understand spoken information. Thank you for choosing Textify, where your voice finds its written form. Join us as we simplify transcription for the world.
+
+*Textify – Speak it. Save it. Share it.*
